@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Filament\Widgets;
+
+use App\Filament\Resources\FeedbackResource;
+use App\Models\Feedback;
+use Filament\Tables\Table;
+use Filament\Widgets\TableWidget as BaseWidget;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Notifications\Notification;
+use Filament\Tables\Actions\Action;
+
+
+class LatestFeedbackTable extends BaseWidget
+{
+
+    protected static ?string $heading = 'Последние заявки';
+    protected int | string | array $columnSpan = 'full';
+
+    public function table(Table $table): Table
+    {
+        return $table
+            ->query(Feedback::query())
+            ->defaultSort('created_at')
+            ->columns([
+                TextColumn::make('name')
+                    ->label('Имя'),
+                TextColumn::make('phone')
+                    ->label('Номер телефона'),
+                TextColumn::make('message')
+                    ->label('Комментарий'),
+                TextColumn::make('created_at')
+                    ->label('Дата создания')
+                    ->dateTime('d/m/o H:i'),
+
+            ])
+            ->actions([
+                Action::make('Просмотр')                    
+                    ->icon('heroicon-m-eye')
+                    ->color('gray')
+                    ->url(fn (Feedback $record): string => FeedbackResource::getUrl('index', ['record' => $record])),
+                DeleteAction::make()
+                ->successNotification(
+                    Notification::make()
+                        ->success()
+                        ->title('Уведомление')
+                        ->body('Заявка была успешно удалена!')
+                ),
+            ]);
+    }
+}
