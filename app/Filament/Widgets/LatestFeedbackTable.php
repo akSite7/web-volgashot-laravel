@@ -30,6 +30,23 @@ class LatestFeedbackTable extends BaseWidget
                     ->label('Номер телефона'),
                 TextColumn::make('message')
                     ->label('Комментарий'),
+                TextColumn::make('status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'new' => 'info',
+                        'processing' => 'warning',
+                        'completed' => 'success',
+                        'declined' => 'danger',
+                        'canceled' => 'danger',
+                    })
+                    ->icons([
+                        'new' => 'heroicon-m-sparkles',
+                        'processing' => 'heroicon-m-arrow-path',
+                        'completed' => 'heroicon-m-truck',
+                        'declined' => 'heroicon-m-exclamation-circle',
+                        'canceled' => 'heroicon-m-x-circle',
+                    ])
+                ->label('Статус заявки'),
                 TextColumn::make('created_at')
                     ->label('Дата создания')
                     ->dateTime('d/m/o H:i'),

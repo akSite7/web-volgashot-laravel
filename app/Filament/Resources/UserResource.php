@@ -35,15 +35,22 @@ class UserResource extends Resource
                     Grid::make(3)->schema([
                         TextInput::make('name')
                             ->label('Имя пользователя')
+                            ->maxLength(255)
                             ->placeholder('Имя пользователя')
                             ->required(),
                         TextInput::make('email')
                             ->label('Электронная почта')
+                            ->unique(ignoreRecord: true)
+                            ->validationMessages([
+                                'unique' => 'Такая почта уже занята.',
+                            ])
                             ->placeholder('Электронная почта')
+                            ->maxLength(255)
                             ->email()
                             ->required(),
                         TextInput::make('password')
                             ->label('Пароль')
+                            ->maxLength(255)
                             ->revealable()
                             ->password()
                             ->required(fn(Page $livewire): bool => $livewire instanceof CreateRecord)

@@ -11,11 +11,13 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\TextArea;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Notifications\Notification;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\SelectColumn;
 
 class FeedbackResource extends Resource
 {
@@ -51,6 +53,33 @@ class FeedbackResource extends Resource
                             ->placeholder('Комментарий')
                             ->required(),
                 ]),
+                Section::make('Статус заявки')->schema([
+                    ToggleButtons::make('status')
+                        ->label('Статус')
+                        ->inline()
+                        ->default('new')
+                        ->options([
+                            'new' => 'Новая',
+                            'processing' => 'В процессе',
+                            'completed' => 'Выполнена',
+                            'declined' => 'Отклонена',
+                            'canceled' => 'Отменена',
+                        ])
+                        ->colors([
+                            'new' => 'info',
+                            'processing' => 'warning',
+                            'completed' => 'success',
+                            'declined' => 'danger',
+                            'canceled' => 'danger',
+                        ])
+                        ->icons([
+                            'new' => 'heroicon-m-sparkles',
+                            'processing' => 'heroicon-m-arrow-path',
+                            'completed' => 'heroicon-m-truck',
+                            'declined' => 'heroicon-m-exclamation-circle',
+                            'canceled' => 'heroicon-m-x-circle',
+                        ])
+                ]),
             ]);
     }
 
@@ -59,7 +88,7 @@ class FeedbackResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->label('Название')
+                    ->label('Имя')
                     ->searchable(),
                 TextColumn::make('phone')
                     ->label('Номер телефона')
@@ -67,6 +96,15 @@ class FeedbackResource extends Resource
                 TextColumn::make('message')
                     ->label('Комментарий')
                     ->searchable(),
+                SelectColumn::make('status')
+                    ->label('Статус заявки')
+                    ->options([
+                            'new' => 'Новая',
+                            'processing' => 'В процессе',
+                            'completed' => 'Выполнена',
+                            'declined' => 'Отклонена',
+                            'canceled' => 'Отменена',
+                        ]),
                 TextColumn::make('created_at')
                     ->label('Дата создания')
                     ->dateTime('d/m/o H:i'),
@@ -116,10 +154,10 @@ class FeedbackResource extends Resource
     }
 
     // Убирает кнопку создать
-    public static function canCreate(): bool
-    {
-        return false;
-    }
+    // public static function canCreate(): bool
+    // {
+    //     return false;
+    // }
 
     // Добавляет счетчик количества заявок
     public static function getNavigationBadge(): ?string 

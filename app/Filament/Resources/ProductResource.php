@@ -24,6 +24,7 @@ use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Notifications\Notification;
 use App\Filament\Resources\ProductResource\Pages;
+use Filament\Tables\Filters\SelectFilter;
 
 class ProductResource extends Resource
 {
@@ -136,11 +137,13 @@ class ProductResource extends Resource
                     ->label('Категория')
                     ->sortable(),
                 IconColumn::make('is_active')
-                    ->label('Статус')
+                    ->label('Наличие')
                     ->boolean(),
             ])
             ->filters([
-                //
+                SelectFilter::make('category')
+                    ->label('Категории')
+                    ->relationship('category', 'name'),
             ])
             ->actions([
                 EditAction::make(),

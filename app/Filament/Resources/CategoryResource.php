@@ -41,6 +41,10 @@ class CategoryResource extends Resource
                             ->required(),
                         TextInput::make('category_slug')
                             ->label('URL категории')
+                            ->unique(Category::class, 'category_slug', ignoreRecord: true)
+                            ->validationMessages([
+                                'unique' => 'Такая категория уже существует.',
+                            ])
                             ->maxLength(255)
                             ->suffixIcon('heroicon-m-globe-alt')
                             ->placeholder('URL')
