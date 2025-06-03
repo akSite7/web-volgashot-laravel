@@ -46,7 +46,15 @@ class LatestFeedbackTable extends BaseWidget
                         'declined' => 'heroicon-m-exclamation-circle',
                         'canceled' => 'heroicon-m-x-circle',
                     ])
-                ->label('Статус заявки'),
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'new' => 'Новая',
+                        'processing' => 'В процессе',
+                        'completed' => 'Выполнена',
+                        'declined' => 'Отклонена',
+                        'canceled' => 'Отменена',
+                        default => ucfirst($state),
+                    })
+                    ->label('Статус заявки'),
                 TextColumn::make('created_at')
                     ->label('Дата создания')
                     ->dateTime('d/m/o H:i'),

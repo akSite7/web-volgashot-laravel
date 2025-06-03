@@ -1,5 +1,5 @@
 <div>
-     <section class="w-full py-24">
+  <section class="w-full py-24">
     <div class="container px-8 mx-auto">
       <div>
         <ul class="flex justify-between">
@@ -25,9 +25,8 @@
       </div>
     </div>
   </section>
-   <section>
-    <div class="pb-24">
-      <iframe class="w-full h-[400px]" src="https://yandex.ru/map-widget/v1/?um=constructor%3A1fbcb60904dd405a63d45bac9d7ab781319bdff014a39996025eff759169a180&amp;source=constructor" width="1440" height="360"></iframe>
-    </div>
-  </section>
+  @livewire('ui.category-tabs')
+  @livewire('ui.about-block')
+  @livewire('ui.feedback-form')
+  @livewire('ui.yandex-map')
 </div>

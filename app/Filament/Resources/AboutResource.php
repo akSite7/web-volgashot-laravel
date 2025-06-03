@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ContactResource\Pages;
+use App\Filament\Resources\AboutResource\Pages;
+use App\Filament\Resources\AboutResource\RelationManagers;
+use App\Models\About;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
-use App\Models\Contact;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Forms\Components\Grid;
@@ -19,14 +21,14 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class ContactResource extends Resource
+class AboutResource extends Resource
 {
-    protected static ?string $model = Contact::class;
+    protected static ?string $model = About::class;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationGroup = 'Информация';
-    protected static ?string $navigationLabel = 'Контактная информация';
-    protected static ?string $modelLabel = 'Контакты';
-    protected static ?string $pluralModelLabel = 'Контакты';
+    protected static ?string $navigationLabel = 'Дополнительная информация';
+    protected static ?string $modelLabel = 'Дополнительная информация';
+    protected static ?string $pluralModelLabel = 'Дополнительная информация';
 
     public static function form(Form $form): Form
     {
@@ -35,14 +37,14 @@ class ContactResource extends Resource
                 Section::make('Основные данные')->schema([
                     Grid::make(2)->schema([
                         TextInput::make('title')
-                            ->label('Полное название организации')
-                            ->placeholder('Полное название')
+                            ->label('Оглавление')
+                            ->placeholder('Оглавление')
                             ->maxLength(255)
                             ->required(),
                         TextInput::make('name')
-                            ->label('Название организации')
+                            ->label('Описание')
                             ->maxLength(255)
-                            ->placeholder('Название организации')
+                            ->placeholder('Описание')
                             ->required(),  
                     ]),
                     Repeater::make('spec')->label('Список информации')->schema([
@@ -53,6 +55,12 @@ class ContactResource extends Resource
                         TextInput::make('value')
                             ->label('Значение')
                             ->placeholder('Значение')
+                            ->required(),
+                        FileUpload::make('image')
+                            ->label('Изображение')
+                            ->image()
+                            ->directory('main')
+                            ->columnSpan('full')
                             ->required(),
                     ])->columns(2),
                     Section::make('Видимость информации')->schema([
@@ -117,9 +125,9 @@ class ContactResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListContacts::route('/'),
-            'create' => Pages\CreateContact::route('/create'),
-            'edit' => Pages\EditContact::route('/{record}/edit'),
+            'index' => Pages\ListAbouts::route('/'),
+            'create' => Pages\CreateAbout::route('/create'),
+            'edit' => Pages\EditAbout::route('/{record}/edit'),
         ];
     }
 }
