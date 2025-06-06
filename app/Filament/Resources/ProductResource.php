@@ -195,4 +195,14 @@ class ProductResource extends Resource
     {
         return Category::pluck('name', 'id');
     }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Магазин';
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 0;
+    }
 }

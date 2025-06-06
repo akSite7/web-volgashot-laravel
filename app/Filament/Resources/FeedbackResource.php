@@ -47,12 +47,14 @@ class FeedbackResource extends Resource
                             ->placeholder('Номер телефона')
                             ->required(),  
                     ]),
+                    
                     TextArea::make('message')
                             ->label('Комментарий')
                             ->autosize()
                             ->placeholder('Комментарий')
                             ->required(),
                 ]),
+                
                 Section::make('Статус заявки')->schema([
                     ToggleButtons::make('status')
                         ->label('Статус')
@@ -86,6 +88,7 @@ class FeedbackResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('name')
                     ->label('Имя')
@@ -104,7 +107,8 @@ class FeedbackResource extends Resource
                             'completed' => 'Выполнена',
                             'declined' => 'Отклонена',
                             'canceled' => 'Отменена',
-                        ]),
+                        ])
+                    ->rules(['required', 'in:new,processing,completed,declined,canceled']),
                 TextColumn::make('created_at')
                     ->label('Дата создания')
                     ->dateTime('d/m/o H:i'),
@@ -112,6 +116,7 @@ class FeedbackResource extends Resource
             ->filters([
                 //
             ])
+            ->emptyStateHeading('Заявки не найдены')
             ->actions([
                 ViewAction::make(),
                 DeleteAction::make()
@@ -154,14 +159,24 @@ class FeedbackResource extends Resource
     }
 
     // Убирает кнопку создать
-    // public static function canCreate(): bool
-    // {
-    //     return false;
-    // }
+    public static function canCreate(): bool
+    {
+        return false;
+    }
 
     // Добавляет счетчик количества заявок
     public static function getNavigationBadge(): ?string 
     {
         return static::getModel()::count();
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Обратная связь';
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 2;
     }
 }

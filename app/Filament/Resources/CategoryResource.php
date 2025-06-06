@@ -127,4 +127,14 @@ class CategoryResource extends Resource
             'index' => Pages\ListCategories::route('/'),
         ];
     }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Магазин';
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 0;
+    }
 }

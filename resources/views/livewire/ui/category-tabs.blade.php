@@ -10,16 +10,16 @@
         Картечь
       </button>
     </div>
-    <div class="mt-0 ml-10">
-      <h1 class="pt-8 font-medium text-6xl">{{ $category->name }}</h1>
-      <div class="text-lg text-gray-500 pt-8">{!! $category->description !!}</div>
-      <ul class="grid pt-8 grid-cols-4 gap-y-14 gap-8">
+    <div class="xl:mt-5 xl:ml-10 xxs:ml-0">
+      <h1 class="pt-8 font-medium sm:text-6xl xxs:text-4xl">{{ $category->name }}</h1>
+      <div class="text-gray-500 pt-8 xl:pt-8 sm:text-lg xxs:text-sm xxs:pt-4">{!! $category->description !!}</div>
+      <ul class="grid pt-8 gap-y-14 gap-8 xl:grid-cols-4 lg:grid-cols-3 xxs:grid-cols-2">
         @foreach ($products as $product)
           <li>
             <article>
               <img class="rounded-md" src="{{ url('storage', $product->image) }}" alt="Изображение товара">
-              <h1 class="pt-3 text-2xl">{{ $product->name }}</h1>
-              <p class="pt-2 text-gray-400 text-sm">{{ $product->description }}</p>
+              <h1 class="pt-3 sm:text-2xl xxs:text-lg">{{ $product->name }}</h1>
+              <p class="pt-2 text-gray-400 sm:text-sm xxs:text-xs">{{ $product->description }}</p>
               <p class="text-xl text-gray-400 pb-5 pt-2">
                   {{ $product->price }} ₽<span class="text-sm text-gray-400"> за 1кг</span>
               </p>

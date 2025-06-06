@@ -24,11 +24,11 @@ use Filament\Tables\Table;
 class AboutResource extends Resource
 {
     protected static ?string $model = About::class;
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-book-open';
     protected static ?string $navigationGroup = 'Информация';
-    protected static ?string $navigationLabel = 'Дополнительная информация';
-    protected static ?string $modelLabel = 'Дополнительная информация';
-    protected static ?string $pluralModelLabel = 'Дополнительная информация';
+    protected static ?string $navigationLabel = 'Информация';
+    protected static ?string $modelLabel = 'Информация';
+    protected static ?string $pluralModelLabel = 'Информация';
 
     public static function form(Form $form): Form
     {
@@ -78,10 +78,10 @@ class AboutResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('title')
-                    ->label('Полное название')
+                    ->label('Оглавление')
                     ->searchable(),
                 TextColumn::make('name')
-                    ->label('Название организации')
+                    ->label('Описание')
                     ->searchable(),
                 IconColumn::make('is_active')
                     ->label('Статус')
@@ -99,7 +99,7 @@ class AboutResource extends Resource
                             ->title('Уведомление')
                             ->icon('heroicon-o-trash')
                             ->iconColor('danger')
-                            ->body('Контактная информация была успешно удалена!')
+                            ->body('Информация была успешно удалена!')
                     ),
             ])
             ->bulkActions([
@@ -110,7 +110,7 @@ class AboutResource extends Resource
                             ->title('Уведомление')
                             ->icon('heroicon-o-trash')
                             ->iconColor('danger')
-                            ->body('Контактная информация была успешно удалена!')
+                            ->body('Информация была успешно удалена!')
                     ),
             ]);
     }
@@ -129,5 +129,15 @@ class AboutResource extends Resource
             'create' => Pages\CreateAbout::route('/create'),
             'edit' => Pages\EditAbout::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Информация';
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 1;
     }
 }

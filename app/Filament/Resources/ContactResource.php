@@ -22,7 +22,7 @@ use Filament\Tables\Table;
 class ContactResource extends Resource
 {
     protected static ?string $model = Contact::class;
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-briefcase';
     protected static ?string $navigationGroup = 'Информация';
     protected static ?string $navigationLabel = 'Контактная информация';
     protected static ?string $modelLabel = 'Контакты';
@@ -121,5 +121,15 @@ class ContactResource extends Resource
             'create' => Pages\CreateContact::route('/create'),
             'edit' => Pages\EditContact::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Информация';
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 1;
     }
 }

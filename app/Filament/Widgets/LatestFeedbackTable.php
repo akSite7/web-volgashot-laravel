@@ -16,13 +16,14 @@ class LatestFeedbackTable extends BaseWidget
 {
 
     protected static ?string $heading = 'Последние заявки';
+    
     protected int | string | array $columnSpan = 'full';
 
     public function table(Table $table): Table
     {
         return $table
             ->query(Feedback::query())
-            ->defaultSort('created_at')
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('name')
                     ->label('Имя'),
@@ -60,6 +61,7 @@ class LatestFeedbackTable extends BaseWidget
                     ->dateTime('d/m/o H:i'),
 
             ])
+            ->emptyStateHeading('Заявки не найдены')
             ->actions([
                 Action::make('Просмотр')                    
                     ->icon('heroicon-m-eye')

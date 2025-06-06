@@ -123,4 +123,14 @@ class UserResource extends Resource
             'index' => Pages\ListUsers::route('/'),
         ];
     }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Настройки';
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 3;
+    }
 }
