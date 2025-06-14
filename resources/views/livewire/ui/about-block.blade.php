@@ -1,5 +1,5 @@
 <section class="w-full">
-  <div class="container mx-auto pb-10 xxs:pb-10 md:pb-16 xl:pb-24">
+  <div class="container mx-auto pb-10 xxs:pb-10 md:pb-16 xl:pb-24 xxs:px-5">
     @foreach($abouts as $about)
       <h3 class="text-3xl text-gray-50 font-medium text-center xxs:text-xl md:text-4xl xxs:pt-0">
           {!! $about->title !!}
@@ -13,7 +13,6 @@
         @foreach ($about->spec as $item)
         <li class="flex flex-col items-center p-5 border rounded border-border bg-action xs:h-64 xxs:h-auto">
           <img src="{{ asset('storage/' . $item['image']) }}" alt="Информация" class="xs:w-[85px] xxs:w-[70px]" />
-          
           <div class="text-xl pt-5 font-medium text-white xs:text-base xs:pt-5 xxs:text-base xxs:pt-0">{{ $item['name'] }}</div>
           <div class="text-center max-w-96 text-gray-500 xs:text-base xxs:text-sm">{!! $item['value'] !!}</div>
         </li>
