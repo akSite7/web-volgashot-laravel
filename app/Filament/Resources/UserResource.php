@@ -2,21 +2,22 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
+use Filament\Forms\Form;
+use Filament\Pages\Page;
+use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Filament\Resources\Pages\CreateRecord;
+use App\Filament\Resources\UserResource\Pages;
+// Добавленные use
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Notifications\Notification;
-use Filament\Pages\Page;
-use Filament\Resources\Pages\CreateRecord;
-use Filament\Resources\Resource;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
+use Filament\Notifications\Notification;
 
 class UserResource extends Resource
 {
@@ -35,26 +36,27 @@ class UserResource extends Resource
                     Grid::make(3)->schema([
                         TextInput::make('name')
                             ->label('Имя пользователя')
-                            ->maxLength(255)
                             ->placeholder('Имя пользователя')
+                            ->maxLength(255)
                             ->required(),
                         TextInput::make('email')
                             ->label('Электронная почта')
+                            ->placeholder('Электронная почта')
+                            ->maxLength(255)
+                            ->email()
                             ->unique(ignoreRecord: true)
                             ->validationMessages([
                                 'unique' => 'Такая почта уже занята.',
                             ])
-                            ->placeholder('Электронная почта')
-                            ->maxLength(255)
-                            ->email()
                             ->required(),
                         TextInput::make('password')
                             ->label('Пароль')
+                            ->placeholder('Пароль')
                             ->maxLength(255)
                             ->revealable()
                             ->password()
-                            ->required(fn(Page $livewire): bool => $livewire instanceof CreateRecord)
                             ->dehydrated(fn($state) => filled($state))
+                            ->required(fn(Page $livewire): bool => $livewire instanceof CreateRecord),
                     ]),
                 ]),
             ]);
@@ -124,13 +126,9 @@ class UserResource extends Resource
         ];
     }
 
-    public static function getNavigationGroup(): ?string
-    {
-        return 'Настройки';
-    }
-
+    // Сортировка положения в меню
     public static function getNavigationSort(): ?int
     {
-        return 3;
+        return 7;
     }
 }

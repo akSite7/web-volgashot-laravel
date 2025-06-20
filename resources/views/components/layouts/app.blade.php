@@ -19,35 +19,18 @@
     --breakpoint-xs: 400px;
     --breakpoint-xxs: 320px;
 
+    
     --color-background: #0E0D13;
+    --color-accent: #4f39f6;
+    --color-accent-hover: #432dd7;
     --color-action: #121117;
     --color-border: #191919;
-    }
-
-    .tab {
-        margin-top: 20px;
-    }
-
-    .tab-content {
-        display: none;
-    }
-
-    #tab-btn-1:checked ~ .tab-container #content-1,
-    #tab-btn-2:checked ~ .tab-container #content-2 {
-        display: block;
-    }
-
-    .tab > input[type="radio"] {
-        display: none;
-    }
-
-    .tab > input[type="radio"]:checked + label {
-    color: #434190;
     }
 
     html {
         scroll-behavior: smooth;
     }
+    
   </style>
   @livewireStyles
 </head>

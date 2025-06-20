@@ -2,28 +2,29 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms\Set;
 use App\Models\Product;
-use Filament\Forms\Form;
 use App\Models\Category;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
-use Illuminate\Support\Str;
 use Filament\Resources\Resource;
-use Filament\Forms\Components\FileUpload;
+use App\Filament\Resources\ProductResource\Pages;
+// Добавленные use
+use Filament\Forms\Set;
+use Illuminate\Support\Str;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Notifications\Notification;
-use App\Filament\Resources\ProductResource\Pages;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\SelectFilter;
 
 class ProductResource extends Resource
@@ -46,11 +47,9 @@ class ProductResource extends Resource
                             ->label('Название товара')
                             ->placeholder('Название')
                             ->maxLength(255)
-                            ->required()
                             ->live(onBlur: true)
-                            ->afterStateUpdated(function (Set $set, $state) {
-                                $set('product_slug', Str::slug($state));
-                            }),
+                            ->afterStateUpdated(function (Set $set, $state) { $set('product_slug', Str::slug($state)); })
+                            ->required(),
                         TextInput::make('product_slug')
                             ->label('URL')
                             ->placeholder('URL')
@@ -62,30 +61,31 @@ class ProductResource extends Resource
                         TextInput::make('price')
                             ->label('Цена')
                             ->placeholder('Цена')
+                            ->maxLength(50)
                             ->suffix('₽')
                             ->required(),
                         Select::make('category_id')
                             ->label('Категория')
-                            ->relationship('category', 'name')
                             ->placeholder('Выбрать категорию')
+                            ->relationship('category', 'name')
                             ->preload()
                             ->native(false)
                             ->createOptionForm([
                                 TextInput::make('name')
                                     ->label('Название категории')
-                                    ->maxLength(255)
                                     ->placeholder('Название категории')
+                                    ->maxLength(255)
                                     ->required(),
                                 TextInput::make('category_slug')
                                     ->label('URL категории')
-                                    ->maxLength(255)
                                     ->placeholder('URL категории')
+                                    ->maxLength(255)
                                     ->suffixIcon('heroicon-m-globe-alt')
                                     ->required(),
                                 TextArea::make('description')
                                     ->label('Описание')
-                                    ->autosize()
                                     ->placeholder('Описание')
+                                    ->autosize()
                                     ->required(),
                                 Toggle::make('is_active')
                                     ->label('Отключена / Включена')
@@ -96,8 +96,8 @@ class ProductResource extends Resource
                     ]),
                     TextArea::make('description')
                             ->label('Описание')
-                            ->autosize()
                             ->placeholder('Описание')
+                            ->autosize()
                             ->required(),
                     Section::make('Медиа и изображения')->schema([
                         FileUpload::make('image')
@@ -118,7 +118,10 @@ class ProductResource extends Resource
 
     public static function table(Table $table): Table
     {
+        
         return $table
+            // Сортировка по последним созданным товарам
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 ImageColumn::make('image')
                     ->label('Изображение'),
@@ -130,21 +133,25 @@ class ProductResource extends Resource
                     ->searchable(),
                 TextColumn::make('price')
                     ->label('Цена')
-                    ->money('RUB'),
+                    ->money('RUB')
+                    ->sortable(),
                 TextColumn::make('product_slug')
-                    ->label('URL'),
+                    ->label('URL')
+                    ->searchable(),
                 TextColumn::make('category.name')
                     ->label('Категория')
                     ->sortable(),
-                IconColumn::make('is_active')
-                    ->label('Наличие')
-                    ->boolean(),
+                ToggleColumn::make('is_active')
+                    ->label('Наличие'),
             ])
             ->filters([
+                // Фильтр по категориям
                 SelectFilter::make('category')
                     ->label('Категории')
                     ->relationship('category', 'name'),
             ])
+            // Сообщение при отсутствии заказов
+            ->emptyStateHeading('Товары не найдены')
             ->actions([
                 EditAction::make(),
                 DeleteAction::make()
@@ -186,23 +193,21 @@ class ProductResource extends Resource
         ];
     }
 
+    // Добавляет счетчик количества товаров
     public static function getNavigationBadge(): ?string 
     {
         return static::getModel()::count();
     }
 
+    // Возвращает массив категорий
     public static function categoryOptions()
     {
         return Category::pluck('name', 'id');
     }
 
-    public static function getNavigationGroup(): ?string
-    {
-        return 'Магазин';
-    }
-
+    // Сортировка положения в меню
     public static function getNavigationSort(): ?int
     {
-        return 0;
+        return 4;
     }
 }

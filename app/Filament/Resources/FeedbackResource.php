@@ -2,22 +2,23 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\FeedbackResource\Pages;
 use App\Models\Feedback;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables\Table;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Section;
+use Filament\Resources\Resource;
+use App\Filament\Resources\FeedbackResource\Pages;
+// Добавленные use
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\ToggleButtons;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Notifications\Notification;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Forms\Components\ToggleButtons;
+use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Columns\SelectColumn;
+use Filament\Notifications\Notification;
 
 class FeedbackResource extends Resource
 {
@@ -26,7 +27,7 @@ class FeedbackResource extends Resource
     protected static ?string $navigationLabel = 'Заявки';
     protected static ?string $modelLabel = 'Заявки';
     protected static ?string $pluralModelLabel = 'Заявки';
-    protected static ?string $navigationGroup = 'Обратная связь';
+    protected static ?string $navigationGroup = 'Заказы/заявки';
 
     public static function form(Form $form): Form
     {
@@ -37,22 +38,23 @@ class FeedbackResource extends Resource
                         TextInput::make('name')
                             ->label('Имя')
                             ->placeholder('Имя')
+                            ->maxLength(255)
                             ->required(),
                         TextInput::make('phone')
                             ->label('Номер телефона')
+                            ->placeholder('Номер телефона')
                             ->suffixIcon('heroicon-o-phone')
                             ->tel()
                             ->mask('+7 (999)-999-99-99')
                             ->regex('/^\+7\s?\(\d{3}\)\-\d{3}\-\d{2}\-\d{2}$/')
-                            ->placeholder('Номер телефона')
                             ->required(),  
                     ]),
-                    
                     TextArea::make('message')
-                            ->label('Комментарий')
-                            ->autosize()
-                            ->placeholder('Комментарий')
-                            ->required(),
+                        ->label('Комментарий')
+                        ->placeholder('Комментарий')
+                        ->maxLength(500)
+                        ->autosize()
+                        ->required(),
                 ]),
                 
                 Section::make('Статус заявки')->schema([
@@ -88,6 +90,7 @@ class FeedbackResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            // Сортировка по последним заявкам
             ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('name')
@@ -102,20 +105,22 @@ class FeedbackResource extends Resource
                 SelectColumn::make('status')
                     ->label('Статус заявки')
                     ->options([
-                            'new' => 'Новая',
-                            'processing' => 'В процессе',
-                            'completed' => 'Выполнена',
-                            'declined' => 'Отклонена',
-                            'canceled' => 'Отменена',
-                        ])
+                        'new' => 'Новая',
+                        'processing' => 'В процессе',
+                        'completed' => 'Выполнена',
+                        'declined' => 'Отклонена',
+                        'canceled' => 'Отменена',
+                    ])
                     ->rules(['required', 'in:new,processing,completed,declined,canceled']),
                 TextColumn::make('created_at')
                     ->label('Дата создания')
-                    ->dateTime('d/m/o H:i'),
+                    ->dateTime('d/m/o H:i')
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
+            // Сообщение при отсутствии заявок
             ->emptyStateHeading('Заявки не найдены')
             ->actions([
                 ViewAction::make(),
@@ -170,11 +175,7 @@ class FeedbackResource extends Resource
         return static::getModel()::count();
     }
 
-    public static function getNavigationGroup(): ?string
-    {
-        return 'Обратная связь';
-    }
-
+    // Сортировка положения в меню
     public static function getNavigationSort(): ?int
     {
         return 2;

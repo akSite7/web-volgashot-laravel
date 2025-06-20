@@ -7,10 +7,10 @@ use Livewire\Component;
 
 class AboutBlock extends Component
 {
-    public function render()
-    {
-        return view('livewire.ui.about-block', [
-            'abouts' => About::all()
-        ]);
-    }
+  public function render()
+  {
+    return view('livewire.ui.about-block', [
+      'abouts' => About::all()
+    ]);
+  }
 }

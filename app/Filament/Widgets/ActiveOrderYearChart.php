@@ -2,19 +2,20 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Feedback;
+use App\Models\Order;
 use Filament\Widgets\ChartWidget;
 use Flowframe\Trend\Trend;
 use Flowframe\Trend\TrendValue;
 
 
-class FeedbackYearChart extends ChartWidget
+class ActiveOrderYearChart extends ChartWidget
 {
-    protected static ?string $heading = 'Статистика заявок';
+    protected static ?string $heading = 'Статистика заказов';
+    protected int|string|array $columnSpan = 1;
 
     protected function getData(): array
     {
-        $data = Trend::model(Feedback::class)
+        $data = Trend::model(Order::class)
         ->between(
             start: now()->startOfYear(),
             end: now()->endOfYear(),
@@ -25,7 +26,7 @@ class FeedbackYearChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Заявки',
+                    'label' => 'Заказы',
                     'data' => $data->map(fn (TrendValue $value) => $value->aggregate),
                 ],
             ],
@@ -35,7 +36,7 @@ class FeedbackYearChart extends ChartWidget
 
     public function getDescription(): ?string
     {
-        return 'Количество поступивших заявок за год.';
+        return 'Количество поступивших заказов за год.';
     }
 
     protected function getType(): string

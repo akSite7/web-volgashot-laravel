@@ -10,13 +10,13 @@
           <h3 class="text-lg font-medium">Основные разделы</h3>
           <ul class="w-full space-y-3 text-gray-400">
             <li>
-              <a wire:navigate href="/category/fraction" class="hover:underline">Дробь</a>
+              <a href="/category/fraction" class="hover:underline">Дробь</a>
             </li>
             <li>
-              <a wire:navigate href='/category/buckshot' class="hover:underline">Картечь</a>
+              <a href='/category/buckshot' class="hover:underline">Картечь</a>
             </li>
             <li>
-              <a wire:navigate href='/contact' class="hover:underline">Контакты</a>
+              <a href='/contact' class="hover:underline">Контакты</a>
             </li>
           </ul>
         </div>

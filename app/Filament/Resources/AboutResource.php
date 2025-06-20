@@ -2,31 +2,31 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\AboutResource\Pages;
-use App\Filament\Resources\AboutResource\RelationManagers;
 use App\Models\About;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Section;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
-use Filament\Notifications\Notification;
-use Filament\Resources\Resource;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use App\Filament\Resources\AboutResource\Pages;
+// Добавленные use
+use Filament\Tables\Actions\EditAction;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Notifications\Notification;
 
 class AboutResource extends Resource
 {
     protected static ?string $model = About::class;
     protected static ?string $navigationIcon = 'heroicon-o-book-open';
     protected static ?string $navigationGroup = 'Информация';
-    protected static ?string $navigationLabel = 'Информация';
+    protected static ?string $navigationLabel = 'Дополнительная информация';
     protected static ?string $modelLabel = 'Информация';
     protected static ?string $pluralModelLabel = 'Информация';
 
@@ -76,6 +76,8 @@ class AboutResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            // Сортировка по последним созданным записям
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('title')
                     ->label('Оглавление')
@@ -131,13 +133,9 @@ class AboutResource extends Resource
         ];
     }
 
-    public static function getNavigationGroup(): ?string
-    {
-        return 'Информация';
-    }
-
+    // Сортировка положения в меню
     public static function getNavigationSort(): ?int
     {
-        return 1;
+        return 6;
     }
 }

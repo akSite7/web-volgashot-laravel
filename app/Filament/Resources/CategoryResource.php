@@ -2,21 +2,22 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CategoryResource\Pages;
 use App\Models\Category;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Toggle;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use App\Filament\Resources\CategoryResource\Pages;
+// Добавленные use
+use Filament\Tables\Actions\EditAction;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Notifications\Notification;
 
 class CategoryResource extends Resource
@@ -41,19 +42,20 @@ class CategoryResource extends Resource
                             ->required(),
                         TextInput::make('category_slug')
                             ->label('URL категории')
+                            ->placeholder('URL')
+                            ->maxLength(255)
                             ->unique(Category::class, 'category_slug', ignoreRecord: true)
                             ->validationMessages([
                                 'unique' => 'Такая категория уже существует.',
                             ])
-                            ->maxLength(255)
                             ->suffixIcon('heroicon-m-globe-alt')
-                            ->placeholder('URL')
                             ->required(),  
                     ]),
                     TextArea::make('description')
                         ->label('Описание')
-                        ->autosize()
                         ->placeholder('Описание')
+                        ->maxLength(255)
+                        ->autosize()
                         ->required(),
                 ]),
                 Section::make('Видимость категории')->schema([
@@ -68,6 +70,8 @@ class CategoryResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            // Сортировка по последним созданным категориям
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('name')
                     ->label('Название категории')
@@ -128,13 +132,9 @@ class CategoryResource extends Resource
         ];
     }
 
-    public static function getNavigationGroup(): ?string
-    {
-        return 'Магазин';
-    }
-
+    // Сортировка положения в меню
     public static function getNavigationSort(): ?int
     {
-        return 0;
+        return 3;
     }
 }

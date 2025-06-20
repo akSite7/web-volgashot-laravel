@@ -3,18 +3,20 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Feedback;
+use App\Models\Order;
 use Filament\Widgets\ChartWidget;
 use Flowframe\Trend\Trend;
 use Flowframe\Trend\TrendValue;
 
 use Carbon\Carbon;
-class FeedbackMonthChart extends ChartWidget
+class ActiveOrderMonthChart extends ChartWidget
 {
     protected static ?string $heading = 'Статистика';
+    protected int|string|array $columnSpan = 1;
 
     protected function getData(): array
     {
-        $data = Trend::model(Feedback::class)
+        $data = Trend::model(Order::class)
         ->between(
             start: now()->startOfMonth(),
             end: now()->endOfMonth(),
@@ -25,7 +27,7 @@ class FeedbackMonthChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Заявки',
+                    'label' => 'Заказы',
                     'data' => $data->map(fn (TrendValue $value) => $value->aggregate),
                 ],
             ],
@@ -36,7 +38,7 @@ class FeedbackMonthChart extends ChartWidget
 
      public function getDescription(): ?string
     {
-        return 'Количество поступивших заявок за месяц.';
+        return 'Количество поступивших заказов за месяц.';
     }
 
     protected function getType(): string

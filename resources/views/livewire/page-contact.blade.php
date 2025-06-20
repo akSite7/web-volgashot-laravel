@@ -1,6 +1,8 @@
 <div>
   <section class="w-full xl:pt-12 xl:pb-24 xxs:pt-6 xxs:pb-12">
-    <div class="container px-8 mx-auto">
+    <div class="container mx-auto px-8">
+
+
       <h1 class="font-medium xl:text-5xl md:text-4xl sm:text-3xl xs:text-2xl xxs:text-lg">Способ связи и юридическая информация</h1>
         @foreach($contacts as $contact)
             <div class="text-gray-400">
@@ -18,8 +20,11 @@
               @endif
           </div>
         @endforeach
+
+
     </div>
   </section>
   @livewire('ui.yandex-map')
   @livewire('ui.feedback-form')
+  @livewire('ui.cart-button')
 </div>

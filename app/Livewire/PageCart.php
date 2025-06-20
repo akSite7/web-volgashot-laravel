@@ -1,30 +1,32 @@
 <?php
 
-namespace App\Livewire\Ui;
+namespace App\Livewire;
 
 use App\Helpers\CartManagement;
 use App\Livewire\Ui\CartButton;
-use App\Models\Category;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
-class CategoryTabs extends Component
+#[Title('Корзина')]
+class PageCart extends Component
 {
-  public $categorySlug = 'fraction';
   public $cart_items = [];
+  public $total_price;
+  public $total_quantity;
 
   public function mount()
   {
     $this->syncCart();
   }
 
-  public function changeCategory($slug)
+  public function hydrate()
   {
-    $this->categorySlug = $slug;
+    $this->syncCart();
   }
 
-  public function addToCart($product_id)
+  public function removeItem($product_id)
   {
-    CartManagement::addItemToCart($product_id);
+    CartManagement::removeCartItem($product_id);
     $this->syncCart();
   }
 
@@ -44,20 +46,13 @@ class CategoryTabs extends Component
   {
     $stats = CartManagement::getCartStats();
     $this->cart_items = $stats['items'];
+    $this->total_price = $stats['total_price'];
+    $this->total_quantity = $stats['total_quantity'];
     $this->dispatch('update-cart-count', total_count: $stats['unique_count'])->to(CartButton::class);
   }
 
   public function render()
   {
-      $categories = Category::with(['products' => function($q) {
-          $q->where('is_active', true)->orderBy('updated_at', 'DESC');
-      }])->get();
-
-      $cart_items = CartManagement::getCartStats()['items'];
-
-      return view('livewire.ui.category-tabs', [
-          'categories' => $categories,
-          'cart_items' => $cart_items,
-      ]);
+    return view('livewire.page-cart');
   }
 }

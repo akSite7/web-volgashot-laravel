@@ -5,19 +5,19 @@
     <div class="flex gap-10">
 
       <!-- Лого -->
-      <a wire:navigate href="{{ route('page.home') }}" class="text-gray-400">VOLGASHOT</a>
+      <a href="{{ route('page.home') }}" class="text-gray-400">VOLGASHOT</a>
 
       <!-- Навигация -->
       <nav class="md:inline xxs:hidden">
         <ul class="flex gap-5">
           <li>
-            <a wire:navigate href="/category/fraction" class="hover:text-indigo-600">Дробь</a>
+            <a href="/category/fraction" class="hover:text-accent-hover">Дробь</a>
           </li>
           <li>
-            <a wire:navigate href="/category/buckshot" class="hover:text-indigo-600">Картечь</a>
+            <a href="/category/buckshot" class="hover:text-accent-hover">Картечь</a>
           </li>
           <li>
-            <a wire:navigate href="/contact" class="hover:text-indigo-600">Контакты</a>
+            <a href="/contact" class="hover:text-accent-hover">Контакты</a>
           </li>
         </ul>
       </nav>
@@ -25,6 +25,7 @@
     
     <!-- Маркетплейсы -->
     <ul class="flex gap-5 md:flex xxs:hidden">
+
       <li>
         <a target="blank" href="https://www.ozon.ru/seller/volgashot-2290576/" class="px-4 py-2 text-center border rounded border-border bg-action">Ozon</a>
       </li>
@@ -39,7 +40,7 @@
 
       <!-- Кнопка бургер-меню -->
       <div class="">
-        <label for="menu-toggle" class="cursor-pointer pt-4 pb-1 px-2 rounded bg-action border rounded border-border">
+        <label for="menu-toggle" class="cursor-pointer pt-4 pb-1 px-2 rounded bg-action border border-border">
           <i class='bxr bx-menu-wider text-2xl'></i>
         </label>
       </div>
@@ -48,16 +49,16 @@
       <nav class="absolute top-12 right-0 w-145 p-4 hidden peer-checked:block z-50 rounded bg-action border border-border md:peer-checked:hidden sm:w-145 xs:w-85 xxs:w-65">
         <ul class="flex flex-col gap-2">
           <li>
-            <a wire:navigate href="/" class="{{ request()->is('/') ? 'bg-indigo-600' : '' }} block px-4 py-2 rounded text-white">Главная</a>
+            <a href="/" class="{{ request()->is('/') ? 'bg-accent' : '' }} block px-4 py-2 rounded text-white">Главная</a>
           </li>
           <li>
-            <a wire:navigate href="/category/fraction" class="{{ request()->is('category/fraction') ? 'bg-indigo-600' : '' }} block px-4 py-2 rounded text-white">Дробь</a>
+            <a href="/category/fraction" class="{{ request()->is('category/fraction') ? 'bg-accent' : '' }} block px-4 py-2 rounded text-white">Дробь</a>
           </li>
           <li>
-            <a wire:navigate href="/category/buckshot" class="{{ request()->is('category/buckshot') ? 'bg-indigo-600' : '' }} block px-4 py-2 rounded">Картечь</a>
+            <a href="/category/buckshot" class="{{ request()->is('category/buckshot') ? 'bg-accent' : '' }} block px-4 py-2 rounded">Картечь</a>
           </li>
           <li>
-            <a wire:navigate href="/contact" class="{{ request()->is('contact') ? 'bg-indigo-600' : '' }} block px-4 py-2 rounded">Контакты</a>
+            <a href="/contact" class="{{ request()->is('contact') ? 'bg-accent' : '' }} block px-4 py-2 rounded">Контакты</a>
           </li>
         </ul>
       </nav>

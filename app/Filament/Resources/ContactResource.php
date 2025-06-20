@@ -2,22 +2,23 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ContactResource\Pages;
-use Filament\Forms\Components\Section;
 use App\Models\Contact;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
-use Filament\Notifications\Notification;
-use Filament\Resources\Resource;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use App\Filament\Resources\ContactResource\Pages;
+// Добавленные use
+use Filament\Tables\Actions\EditAction;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Toggle;
+use Filament\Tables\Columns\ToggleColumn;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Notifications\Notification;
 
 class ContactResource extends Resource
 {
@@ -41,21 +42,23 @@ class ContactResource extends Resource
                             ->required(),
                         TextInput::make('name')
                             ->label('Название организации')
-                            ->maxLength(255)
                             ->placeholder('Название организации')
+                            ->maxLength(255)
                             ->required(),  
                     ]),
-                    Repeater::make('spec')->label('Список информации')->schema([
-                        TextInput::make('name')
-                            ->label('Название')
-                            ->placeholder('Название')
-                            ->required(),
-                        TextInput::make('value')
-                            ->label('Значение')
-                            ->placeholder('Значение')
-                            ->required(),
-                    ])->columns(2),
-                    Section::make('Видимость информации')->schema([
+                    Repeater::make('spec')
+                        ->label('Список информации')
+                        ->schema([
+                            TextInput::make('name')
+                                ->label('Название')
+                                ->placeholder('Название')
+                                ->required(),
+                            TextInput::make('value')
+                                ->label('Значение')
+                                ->placeholder('Значение')
+                                ->required(),
+                        ])->columns(2),
+                    Section::make('Отображение контактной информации')->schema([
                         Toggle::make('is_active')
                             ->label('Отключена / Включена')
                             ->default(true)
@@ -68,6 +71,8 @@ class ContactResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            // Сортировка по последним созданным записям
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('title')
                     ->label('Полное название')
@@ -75,9 +80,8 @@ class ContactResource extends Resource
                 TextColumn::make('name')
                     ->label('Название организации')
                     ->searchable(),
-                IconColumn::make('is_active')
-                    ->label('Статус')
-                    ->boolean(),
+                ToggleColumn::make('is_active')
+                    ->label('Отображение'),
             ])
             ->filters([
                 //
@@ -123,13 +127,9 @@ class ContactResource extends Resource
         ];
     }
 
-    public static function getNavigationGroup(): ?string
-    {
-        return 'Информация';
-    }
-
+    // Сортировка положения в меню
     public static function getNavigationSort(): ?int
     {
-        return 1;
+        return 5;
     }
 }

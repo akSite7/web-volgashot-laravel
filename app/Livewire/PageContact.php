@@ -6,14 +6,13 @@ use App\Models\Contact;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Title('VOLGASHOT - Контакты')] 
+#[Title('Контакты')] 
 class PageContact extends Component
 {
-
-    public function render()
-    {
-        return view('livewire.page-contact', [
-            'contacts' => Contact::all()
-        ]);
-    }
+  public function render()
+  {
+    return view('livewire.page-contact', [
+      'contacts' => Contact::all(),
+    ]);
+  }
 }

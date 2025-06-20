@@ -61,4 +61,9 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ]);
     }
+
+    protected function getColumns(): int | string | array
+{
+    return 3; // 3 колонки
+}
 }

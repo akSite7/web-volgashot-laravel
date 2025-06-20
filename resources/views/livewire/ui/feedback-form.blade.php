@@ -12,26 +12,26 @@
       
         <div class="grid sm:grid-cols-2 gap-5">
           <div>
-            <input wire:model.defer="name" maxlength="50"  type="text" placeholder="Ваше имя" class=" w-full bg-background text-white p-4 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-left xxs:text-center" />
+            <input wire:model.defer="name" maxlength="50"  type="text" placeholder="Ваше имя" class=" w-full bg-background p-4 focus:outline-none focus:ring-2 focus:ring-accent sm:text-left xxs:text-center" />
             @error('name')
               <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
             @enderror
           </div>
           <div>
-            <input wire:model.defer="phone" type="text" placeholder="Телефон" class="w-full bg-background text-white p-4 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-left xxs:text-center" />
+            <input wire:model.defer="phone" type="text" placeholder="Телефон" class="w-full bg-background p-4 focus:outline-none focus:ring-2 focus:ring-accent sm:text-left xxs:text-center" />
             @error('phone')
               <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
             @enderror
           </div>
         </div>
         <div class="mt-5">
-          <textarea wire:model.defer="message" rows="6" placeholder="Комментарий" class="w-full bg-background text-white p-4 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-left xxs:text-center "></textarea>
+          <textarea wire:model.defer="message" maxlength="400" rows="6" placeholder="Комментарий" class="w-full bg-background p-4 focus:outline-none focus:ring-2 focus:ring-accent sm:text-left xxs:text-center "></textarea>
           @error('message')
             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
           @enderror
         </div>
         <p class="text-xs text-gray-500 mt-2">Нажимая кнопку, вы соглашаетесь на обработку персональных данных и с политикой конфиденциальности</p>
-        <button type="submit" class="mt-4 cursor-pointer bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-6 rounded transition sm:w-33 sm:text-left xxs:w-full">Отправить</button>
+        <button type="submit" class="mt-4 cursor-pointer bg-accent hover:bg-accent-hover  font-medium py-2 px-6 rounded transition sm:w-33 sm:text-left xxs:w-full">Отправить</button>
           @if (session()->has('success'))
             <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 5000)" x-show="show" x-transition:leave="transition ease-in duration-500" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed top-6 right-6 border rounded border-border bg-action text-gray-500 px-4 py-3 shadow-lg flex items-center gap-2 sm:w-115 xs:w-90 xxs:w-70">
               <i class=' text-green-400 bx bx-check-circle text-xl'></i>
