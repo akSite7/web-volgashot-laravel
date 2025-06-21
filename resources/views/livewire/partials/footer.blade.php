@@ -1,5 +1,8 @@
+<!-- Футер и контейнер -->
 <footer class="w-full py-10 border-t border-border">
   <div class="container px-8 mx-auto space-y-7">
+
+    <!-- Контент -->
     <div class="w-full flex flex-col justify-between items-start gap-10 lg:flex-row">
       <div class="space-y-5 w-3/12 xl:w-3/12 lg:w-6/12 xxs:w-12/12">
         <a wire:navigate href="{{ route('page.home') }}" class="text-2xl font-semibold">VOLGASHOT</a>
@@ -36,5 +39,8 @@
     <div class="flex items-center justify-between gap-2 flex-col flex-row">
       <p class="text-sm text-gray-500">&copy; {{ now()->format('Y') }} VOLGASHOT</p>
     </div>
+    <!-- Конец контента -->
+
   </div>
 </footer>
+<!-- Конец футера и контейнера -->

@@ -34,7 +34,7 @@
         <button type="submit" class="mt-4 cursor-pointer bg-accent hover:bg-accent-hover  font-medium py-2 px-6 rounded transition sm:w-33 sm:text-left xxs:w-full">Отправить</button>
           @if (session()->has('success'))
             <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 5000)" x-show="show" x-transition:leave="transition ease-in duration-500" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed top-6 right-6 border rounded border-border bg-action text-gray-500 px-4 py-3 shadow-lg flex items-center gap-2 sm:w-115 xs:w-90 xxs:w-70">
-              <i class=' text-green-400 bx bx-check-circle text-xl'></i>
+              <box-icon name='check-square' color='green'></box-icon>
               <span>{{ session('success') }}</span>
             </div>
           @endif

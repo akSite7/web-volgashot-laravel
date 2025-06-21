@@ -22,7 +22,7 @@
             @endphp
              <li>
               <article >
-                <img class="rounded-md" src="{{ url('storage', $product->image) }}" alt="Изображение товара">
+                <img class="rounded-md" src="{{ asset('storage/' . $product->image) }}" alt="Изображение товара">
                 <h1 class="pt-3 sm:text-2xl xxs:text-lg">{{ $product->name }}</h1>
                 <p class="pt-2 text-gray-400 sm:text-sm xxs:text-xs">{{ $product->description }}</p>
                 <p class="text-xl text-gray-400 pb-5 pt-2">

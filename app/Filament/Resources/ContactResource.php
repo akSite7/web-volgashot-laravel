@@ -86,6 +86,8 @@ class ContactResource extends Resource
             ->filters([
                 //
             ])
+            // Сообщение при отсутствии контактных данных
+            ->emptyStateHeading('Контакты не найдены')
             ->actions([
                 EditAction::make(),
                 DeleteAction::make()

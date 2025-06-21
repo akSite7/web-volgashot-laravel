@@ -86,6 +86,8 @@ class CategoryResource extends Resource
             ->filters([
                 //
             ])
+            // Сообщение при отсутствии категорий
+            ->emptyStateHeading('Категории не найдены')
             ->actions([
                 EditAction::make()
                     ->successNotification(

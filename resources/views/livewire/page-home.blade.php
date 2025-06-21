@@ -1,8 +1,10 @@
 <div>
+
+  <!-- Секция и контейнер -->
   <section class="w-full xl:py-24 md:py-12 xxs:pt-5 xxs:py-12">
     <div class="container mx-auto px-8">
 
-
+      <!-- Контент -->
       <ul class="flex justify-between">
         <li>
           <div>
@@ -23,13 +25,17 @@
           <img alt="Картинка оружия" class="w-[2000px] xl:mt-0 lg:mt-12 lg:inline xxs:hidden" src="{{ asset('/storage/main/gun.svg') }}"></img>
         </li>
       </ul>
-
+      <!-- Конец контента -->
 
     </div>
   </section>
+  <!-- Конец секции и контейнера -->
+   
+  <!-- Подключенные блоки -->
   @livewire('ui.category-tabs')
   @livewire('ui.about-block')
   @livewire('ui.feedback-form')
   @livewire('ui.yandex-map')
   @livewire('ui.cart-button')
+
 </div>

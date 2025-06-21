@@ -92,6 +92,8 @@ class AboutResource extends Resource
             ->filters([
                 //
             ])
+            // Сообщение при отсутствии дополнительной информации
+            ->emptyStateHeading('Информация не найдена')
             ->actions([
                 EditAction::make(),
                 DeleteAction::make()

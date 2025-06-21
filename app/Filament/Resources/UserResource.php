@@ -80,6 +80,8 @@ class UserResource extends Resource
             ->filters([
                 //
             ])
+            // Сообщение при отсутствии пользователей
+            ->emptyStateHeading('Пользователи не найдены')
             ->actions([
                 EditAction::make()
                     ->successNotification(

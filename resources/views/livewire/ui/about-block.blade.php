@@ -12,7 +12,7 @@
       <ul class="pt-10 grid gap-10 sm:grid-cols-2">
         @foreach ($about->spec as $item)
         <li class="flex flex-col items-center p-5 border rounded border-border bg-action xs:h-64 xxs:h-auto">
-          <img src="{{ asset('storage/' . $item['image']) }}" alt="Информация" class="xs:w-[85px] xxs:w-[70px]" />
+          <img src="{{ asset('storage/' . $item['image']) }}" alt="Информация" class="xs:w-[95px] xxs:w-[80px]" />
           <div class="text-xl pt-5 font-medium text-white lg:text-xl xs:pt-5 xxs:text-base xxs:pt-0 xxs:pb-2">{{ $item['name'] }}</div>
           <div class="text-center max-w-96 text-gray-400 xs:text-base xxs:text-sm">{!! $item['value'] !!}</div>
         </li>

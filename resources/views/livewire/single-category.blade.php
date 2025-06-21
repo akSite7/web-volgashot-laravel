@@ -1,8 +1,10 @@
 <div>
+  
+  <!-- Секция и контейнер -->
   <section class="w-full">
     <div class="container mx-auto px-8 py-15">
 
-
+      <!-- Контент -->
       <div class="mb-20">
         <div>
           <h1 class=" font-medium text-5xl">{{ $category->name }}</h1>
@@ -14,7 +16,7 @@
               @endphp
               <li>
                 <article>
-                  <img class="rounded-md" src="{{ url('storage', $product->image) }}" alt="Изображение товара">
+                  <img class="rounded-md" src="{{ asset('storage/' . $product->image) }}" alt="Изображение товара">
                   <h1 class="pt-3 text-2xl">{{ $product->name }}</h1>
                   <p class="pt-2 text-gray-400 text-sm">{{ $product->description }}</p>
                   <p class="text-xl text-gray-400 pb-5 pt-2">{{ $product->price }} ₽<span class="text-sm text-gray-400"> за 1кг</span></p>
@@ -39,10 +41,14 @@
           </ul>
         </div>
       </div>
-
+      <!-- Конец контента -->
 
     </div>
   </section>
+  <!-- Конец секции и контейнера -->
+
+  <!-- Подключенные блоки -->
   @livewire('ui.feedback-form')
   @livewire('ui.cart-button')
+
 </div>

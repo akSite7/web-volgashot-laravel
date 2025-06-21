@@ -118,7 +118,6 @@ class ProductResource extends Resource
 
     public static function table(Table $table): Table
     {
-        
         return $table
             // Сортировка по последним созданным товарам
             ->defaultSort('created_at', 'desc')
@@ -150,7 +149,7 @@ class ProductResource extends Resource
                     ->label('Категории')
                     ->relationship('category', 'name'),
             ])
-            // Сообщение при отсутствии заказов
+            // Сообщение при отсутствии товаров
             ->emptyStateHeading('Товары не найдены')
             ->actions([
                 EditAction::make(),
