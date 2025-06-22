@@ -1,2 +1,14 @@
 User-agent: *
-Disallow:
+
+Disallow: /
+
+Disallow: /category/fraction
+Disallow: /category/buckshot
+Disallow: /cart
+Disallow: /order
+Disallow: /thank-you
+Disallow: /contact
+
+Allow: /$
+
+Sitemap: https://volgashot.ru/sitemap.xml
